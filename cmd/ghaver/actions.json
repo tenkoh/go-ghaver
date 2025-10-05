@@ -1,0 +1,9 @@
+{
+    "actions": [
+        "cache",
+        "checkout"
+    ],
+    "aws-actions": [
+        "configure-aws-credential"
+    ]
+}
