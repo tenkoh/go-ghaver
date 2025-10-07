@@ -36,9 +36,9 @@ func main() {
 	client := ghaver.NewGitHubAPI(nil)
 
 	server := mcp.NewServer(&mcp.Implementation{
-		Name:    "select-gha-version-mcp",
+		Name:    "gha-version-mcp",
 		Version: "0.1.0",
-		Title:   "GitHub Actions Version Selector",
+		Title:   "GitHub Actions Version Select Helper",
 	}, nil)
 
 	mcp.AddTool(server, &mcp.Tool{
