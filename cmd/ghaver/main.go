@@ -27,6 +27,9 @@ func main() {
 		kong.Name("ghaver"),
 		kong.Description("Search and select GitHub Actions versions."),
 	)
+	if _, err := parser.Parse(os.Args[1:]); err != nil {
+		parser.FatalIfErrorf(err)
+	}
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer cancel()
 
