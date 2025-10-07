@@ -11,7 +11,7 @@ import (
 
 	"github.com/alecthomas/kong"
 
-	"github.com/tenkoh/go-ghaver"
+	"github.com/tenkoh/go-ghaver/internal/ghaver"
 )
 
 //go:embed actions.json
