@@ -43,7 +43,7 @@ func main() {
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "select-gha-version",
-		Description: "Fetch release tags for a GitHub Action repository and surface them to the caller. When recent releases belong to a brand-new major version with only a handful of releases, the LLM agent should prefer recommending the previous major version for stability.",
+		Description: "Fetch release tags for a GitHub Action repository and surface them to the caller. When the newest releases belong to a fresh major version with limited history, explicitly ask the user whether they want the absolute latest release (including that major) or the newest release from the prior major before making a recommendation.",
 	}, func(ctx context.Context, req *mcp.CallToolRequest, input selectInput) (*mcp.CallToolResult, selectOutput, error) {
 		output, err := handleRequest(ctx, client, input)
 		if err != nil {
