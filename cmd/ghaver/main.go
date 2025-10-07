@@ -22,12 +22,8 @@ type cli struct {
 }
 
 func main() {
-	var cfg cli
-	parser := kong.Must(&cfg,
-		kong.Name("ghaver"),
-		kong.Description("Search and select GitHub Actions versions."),
-	)
-	if _, err := parser.Parse(os.Args[1:]); err != nil {
+	cfg, parser, err := parseCLI(os.Args[1:])
+	if err != nil {
 		parser.FatalIfErrorf(err)
 	}
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
@@ -40,6 +36,18 @@ func main() {
 		fmt.Fprintln(os.Stderr, "error:", err)
 		parser.Exit(1)
 	}
+}
+
+func parseCLI(args []string) (cli, *kong.Kong, error) {
+	var cfg cli
+	parser := kong.Must(&cfg,
+		kong.Name("ghaver"),
+		kong.Description("Search and select GitHub Actions versions."),
+	)
+	if _, err := parser.Parse(args); err != nil {
+		return cli{}, parser, err
+	}
+	return cfg, parser, nil
 }
 
 func run(ctx context.Context, cfg cli) error {
