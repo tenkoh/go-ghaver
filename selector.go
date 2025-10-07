@@ -17,16 +17,12 @@ var ErrSelectionAborted = errors.New("selection aborted")
 
 // FZFSelector integrates go-fzf for interactive selection.
 type FZFSelector struct {
-	f *fzf.FZF
+	options []fzf.Option
 }
 
 // NewFZFSelector constructs a selector with optional configuration.
 func NewFZFSelector(opts ...fzf.Option) (*FZFSelector, error) {
-	finder, err := fzf.New(opts...)
-	if err != nil {
-		return nil, fmt.Errorf("init fzf: %w", err)
-	}
-	return &FZFSelector{f: finder}, nil
+	return &FZFSelector{options: opts}, nil
 }
 
 // Select returns the index of the item chosen by the user.
@@ -35,7 +31,13 @@ func (s *FZFSelector) Select(items []string) (int, error) {
 		return 0, fmt.Errorf("no items to select")
 	}
 
-	idxs, err := s.f.Find(items, func(i int) string {
+	finder, err := fzf.New(s.options...)
+	if err != nil {
+		return 0, fmt.Errorf("init fzf: %w", err)
+	}
+	defer finder.Quit()
+
+	idxs, err := finder.Find(items, func(i int) string {
 		return items[i]
 	})
 	if err != nil {
@@ -52,7 +54,5 @@ func (s *FZFSelector) Select(items []string) (int, error) {
 
 // Close releases underlying resources held by the selector.
 func (s *FZFSelector) Close() {
-	if s.f != nil {
-		s.f.Quit()
-	}
+	// No persistent resources to release.
 }
