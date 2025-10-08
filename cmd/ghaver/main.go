@@ -73,9 +73,10 @@ func run(ctx context.Context, cfg cli) error {
 		return err
 	}
 
-	output := version.Tag
+	repoRef := fmt.Sprintf("%s/%s", version.Owner, version.Repo)
+	output := fmt.Sprintf("%s@%s", repoRef, version.Tag)
 	if cfg.SHA {
-		output = fmt.Sprintf("%s # %s", version.SHA, version.Tag)
+		output = fmt.Sprintf("%s@%s # %s", repoRef, version.SHA, version.Tag)
 	}
 
 	if shouldAddNewline(os.Stdout) {

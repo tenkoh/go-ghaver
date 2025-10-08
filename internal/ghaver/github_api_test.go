@@ -70,11 +70,20 @@ func TestGitHubAPIVersionsIncludesReleasesAndTags(t *testing.T) {
 		t.Fatalf("expected 3 versions, got %d", len(versions))
 	}
 
+	if versions[0].Owner != "octo" || versions[0].Repo != "act" {
+		t.Errorf("unexpected coordinates for release[0]: %+v", versions[0])
+	}
 	if versions[0].Tag != "v3.0.0" || versions[0].SHA != "deadbeefdeadbeefdeadbeefdeadbeefdeadbeef" || !versions[0].Prerelease {
 		t.Errorf("unexpected release[0]: %+v", versions[0])
 	}
+	if versions[1].Owner != "octo" || versions[1].Repo != "act" {
+		t.Errorf("unexpected coordinates for release[1]: %+v", versions[1])
+	}
 	if versions[1].Tag != "v2.0.0" || versions[1].SHA != "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" {
 		t.Errorf("unexpected release[1]: %+v", versions[1])
+	}
+	if versions[2].Owner != "octo" || versions[2].Repo != "act" {
+		t.Errorf("unexpected coordinates for tag fallback: %+v", versions[2])
 	}
 	if versions[2].Tag != "v1.0.0" || versions[2].SHA != "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" {
 		t.Errorf("unexpected tag fallback: %+v", versions[2])
@@ -110,6 +119,9 @@ func TestGitHubAPIVersionsFallsBackToTags(t *testing.T) {
 	}
 	if len(versions) != 1 {
 		t.Fatalf("expected 1 version, got %d", len(versions))
+	}
+	if versions[0].Owner != "octo" || versions[0].Repo != "empty" {
+		t.Fatalf("unexpected coordinates: %+v", versions[0])
 	}
 	if versions[0].Tag != "v0.1.0" || versions[0].SHA != "dddddddddddddddddddddddddddddddddddddddd" {
 		t.Fatalf("unexpected version: %+v", versions[0])

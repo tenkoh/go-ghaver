@@ -21,6 +21,8 @@ type HTTPClient interface {
 
 // Version captures metadata needed for selection and output.
 type Version struct {
+	Owner      string
+	Repo       string
 	Tag        string
 	Name       string
 	SHA        string
@@ -90,6 +92,8 @@ func (c *GitHubAPI) Versions(ctx context.Context, owner, repo string) ([]Version
 			}
 		}
 		versions = append(versions, Version{
+			Owner:      owner,
+			Repo:       repo,
 			Tag:        r.TagName,
 			Name:       firstNonEmpty(r.Name, r.TagName),
 			SHA:        sha,
@@ -113,6 +117,8 @@ func (c *GitHubAPI) Versions(ctx context.Context, owner, repo string) ([]Version
 			continue
 		}
 		versions = append(versions, Version{
+			Owner:  owner,
+			Repo:   repo,
 			Tag:    t.Name,
 			Name:   t.Name,
 			SHA:    t.SHA,

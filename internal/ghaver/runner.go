@@ -58,6 +58,14 @@ func (r *Runner) Run(ctx context.Context, opts Options) (Version, error) {
 		return Version{}, fmt.Errorf("version %s has no associated commit SHA", version.Tag)
 	}
 
+	// Ensure the selected version carries the originating action coordinates.
+	if version.Owner == "" {
+		version.Owner = selected.Owner
+	}
+	if version.Repo == "" {
+		version.Repo = selected.Repo
+	}
+
 	return version, nil
 }
 

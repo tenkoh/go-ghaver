@@ -53,6 +53,9 @@ func TestRunnerRun(t *testing.T) {
 	if got.Tag != "v3" {
 		t.Fatalf("expected v3 tag, got %s", got.Tag)
 	}
+	if got.Owner != "actions" || got.Repo != "checkout" {
+		t.Fatalf("expected coordinates actions/checkout, got %s/%s", got.Owner, got.Repo)
+	}
 }
 
 func TestRunnerRunRequiresSHA(t *testing.T) {
