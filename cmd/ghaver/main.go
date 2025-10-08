@@ -17,14 +17,22 @@ import (
 //go:embed actions.json
 var actionsJSON []byte
 
+// version is overridden at build time via -ldflags.
+var version = "dev"
+
 type cli struct {
-	SHA bool `kong:"help='Include commit SHA in the output'"`
+	SHA     bool `kong:"help='Include commit SHA in the output'"`
+	Version bool `kong:"help='Print version information and exit',short='v',name='version'"`
 }
 
 func main() {
 	cfg, parser, err := parseCLI(os.Args[1:])
 	if err != nil {
 		parser.FatalIfErrorf(err)
+	}
+	if cfg.Version {
+		fmt.Fprintln(os.Stdout, version)
+		return
 	}
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer cancel()
