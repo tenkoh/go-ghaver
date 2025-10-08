@@ -1,9 +1,31 @@
 {
     "actions": [
         "cache",
-        "checkout"
+        "checkout",
+        "configure-pages",
+        "create-github-app-token",
+        "create-release",
+        "deploy-pages",
+        "download-artifact",
+        "setup-dotnet",
+        "setup-elixir",
+        "setup-haskell",
+        "setup-java",
+        "setup-go",
+        "setup-node",
+        "setup-python",
+        "setup-ruby",
+        "upload-artifact",
+        "upload-pages-artifact",
+        "upload-release-asset"
     ],
     "aws-actions": [
+        "amazon-ecr-login",
         "configure-aws-credential"
+    ],
+    "docker": [
+        "build-push-action",
+        "login-action",
+        "setup-buildx-action"
     ]
 }
