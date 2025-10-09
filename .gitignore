@@ -34,3 +34,4 @@ go.work.sum
 # cache
 .cache/
 .gocache/
+dist/
