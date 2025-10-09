@@ -16,7 +16,7 @@ builds:
     main: ./cmd/ghaver/main.go
     binary: ghaver
     gcflags:
-      - all=-trimpath={{.Env.GOPATH}}
+      - -trimpath
     ldflags:
       - -s -w -X main.version={{.Version}}
 
