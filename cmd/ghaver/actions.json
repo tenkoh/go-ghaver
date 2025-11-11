@@ -21,7 +21,7 @@
     ],
     "aws-actions": [
         "amazon-ecr-login",
-        "configure-aws-credential"
+        "configure-aws-credentials"
     ],
     "docker": [
         "build-push-action",
